@@ -1,0 +1,78 @@
+name: Rust CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+        components: rustfmt, clippy
+
+    - name: Check formatting
+      uses: actions-rs/cargo@v1
+      with:
+        command: fmt
+        args: --all -- --check
+
+    - name: Clippy
+      uses: actions-rs/cargo@v1
+      with:
+        command: clippy
+        args: -- -D warnings
+
+    - name: Build
+      uses: actions-rs/cargo@v1
+      with:
+        command: build
+        args: --verbose
+
+    - name: Run tests
+      uses: actions-rs/cargo@v1
+      with:
+        command: test
+        args: --verbose
+
+    - name: Run examples
+      uses: actions-rs/cargo@v1
+      with:
+        command: run
+        args: --example basic
+
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+
+    - name: Install cargo-tarpaulin
+      uses: actions-rs/install@v0.1
+      with:
+        crate: cargo-tarpaulin
+        version: latest
+        use-tool-cache: true
+
+    - name: Generate coverage report
+      uses: actions-rs/cargo@v1
+      with:
+        command: tarpaulin
+        args: --out Xml
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
