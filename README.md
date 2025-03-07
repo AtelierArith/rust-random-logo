@@ -185,11 +185,25 @@ Key files to study:
 
 ## Performance
 
-The library is optimized for performance:
+The library is optimized for performance. Here are the latest benchmark results:
 
-- Generating an IFS: ~237 ns
-- Rendering a small image (100x100, 10,000 points): ~344 μs
-- Rendering a medium image (384x384, 100,000 points): ~3.46 ms
+- Generating an IFS: ~240 ns (237.38 ns - 243.53 ns)
+- Rendering a small image (100x100, 10,000 points): ~344 μs (342.77 μs - 347.09 μs)
+- Rendering a medium image (384x384, 100,000 points): ~3.57 ms (3.52 ms - 3.62 ms)
+
+You can reproduce these performance results by running the benchmarks:
+
+```bash
+# Run all benchmarks
+cargo bench
+
+# Run a specific benchmark
+cargo bench -- generate_ifs
+cargo bench -- render_small
+cargo bench -- render_medium
+```
+
+The benchmarks are implemented using the Criterion.rs framework and can be found in the `benches/benchmarks.rs` file. The benchmark results may vary slightly depending on your hardware and system load.
 
 ## License
 
