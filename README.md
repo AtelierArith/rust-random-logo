@@ -48,6 +48,10 @@ cargo run --example basic
 cargo run --example grid
 ```
 
+We will get:
+
+![](examples/fractal_grid.png)
+
 Or use the command-line interface:
 
 ```bash
