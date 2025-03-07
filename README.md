@@ -93,7 +93,7 @@ use rand_xoshiro::Xoshiro256PlusPlus;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a random number generator with a seed
-    let mut rng = Xoshiro256PlusPlus::seed_from_u64(42);
+    let mut rng = Xoshiro256PlusPlus::seed_from_u64(99);
 
     // Create a random IFS
     let ifs = rand_sigma_factor_ifs(&mut rng);
@@ -106,7 +106,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ifs_name: "SigmaFactorIFS".to_string(),
         ndims: 2,
         rng_name: "Xoshiro256PlusPlus".to_string(),
-        seed: 42,
+        seed: 99,
     };
 
     // Render the image
@@ -173,6 +173,14 @@ Key files to study:
 - `src/core/renderer.rs`: Learn about image generation and processing
 - `tests/integration_tests.rs`: Understand how to write effective tests
 - `.github/workflows/rust.yml`: Learn about CI/CD configuration
+
+## Recent Updates
+
+### Version 0.1.1 (March 8, 2025)
+
+- **Bug Fix**: Fixed an issue where changing the seed value in the configuration file wasn't properly affecting the output image. The bug was in the `render_from_config` function where the RNG state wasn't being properly managed.
+- **Bug Fix**: Fixed color inconsistency between the basic example and the main program. Now both methods produce the same colors for the same seed.
+- **Change**: Updated the default seed value to 99 throughout the codebase.
 
 ## Performance
 
