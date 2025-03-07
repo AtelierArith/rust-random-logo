@@ -139,12 +139,6 @@ pub fn render_from_config(config: &Config) -> Result<RgbImage> {
     use rand::SeedableRng;
     use rand_xoshiro::Xoshiro256PlusPlus;
 
-    // Create RNG
-    let rng = match config.rng_name.as_str() {
-        "Xoshiro256PlusPlus" => Xoshiro256PlusPlus::seed_from_u64(config.seed),
-        _ => return Err(Error::ConfigError(format!("Unknown RNG: {}", config.rng_name))),
-    };
-
     // Validate IFS configuration
     if config.ifs_name != "SigmaFactorIFS" {
         return Err(Error::ConfigError(format!("Unknown IFS: {}", config.ifs_name)));
@@ -154,9 +148,21 @@ pub fn render_from_config(config: &Config) -> Result<RgbImage> {
         return Err(Error::ConfigError(format!("Unsupported dimension: {}", config.ndims)));
     }
 
+    // Create RNG for IFS generation
+    let mut rng_for_ifs = match config.rng_name.as_str() {
+        "Xoshiro256PlusPlus" => Xoshiro256PlusPlus::seed_from_u64(config.seed),
+        _ => return Err(Error::ConfigError(format!("Unknown RNG: {}", config.rng_name))),
+    };
+
     // Create IFS
-    let ifs = crate::core::ifs::rand_sigma_factor_ifs(&mut rng.clone());
+    let ifs = crate::core::ifs::rand_sigma_factor_ifs(&mut rng_for_ifs);
+
+    // Create a new RNG for rendering with the same seed
+    let rng_for_render = match config.rng_name.as_str() {
+        "Xoshiro256PlusPlus" => Xoshiro256PlusPlus::seed_from_u64(config.seed),
+        _ => return Err(Error::ConfigError(format!("Unknown RNG: {}", config.rng_name))),
+    };
 
     // Render image
-    Ok(render(rng, &ifs, config))
+    Ok(render(rng_for_render, &ifs, config))
 }
