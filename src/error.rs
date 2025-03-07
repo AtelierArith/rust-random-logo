@@ -1,7 +1,7 @@
 //! Error types for the rust-random-logo library
 
-use thiserror::Error;
 use std::io;
+use thiserror::Error;
 
 /// Error type for the rust-random-logo library
 #[derive(Error, Debug)]

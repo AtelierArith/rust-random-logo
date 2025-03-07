@@ -4,9 +4,9 @@
 //! The implementation is based on the SVD approach proposed in the
 //! [Improving Fractal Pre-training](http://catalys1.github.io/fractal-pretraining/) paper.
 
-use nalgebra::{Matrix2, Vector2, Rotation2};
-use rand::Rng;
+use nalgebra::{Matrix2, Rotation2, Vector2};
 use rand::distributions::{Distribution, WeightedIndex};
+use rand::Rng;
 
 use crate::core::affine::Affine;
 use crate::core::types::{Matrix2f, Vector2f, IFS};
@@ -36,8 +36,15 @@ impl SigmaFactorIFS {
     ///
     /// A new SigmaFactorIFS
     pub fn new(transforms: Vec<Affine>, weights: Vec<f64>) -> Self {
-        assert_eq!(transforms.len(), weights.len(), "Number of transforms must match number of weights");
-        Self { transforms, weights }
+        assert_eq!(
+            transforms.len(),
+            weights.len(),
+            "Number of transforms must match number of weights"
+        );
+        Self {
+            transforms,
+            weights,
+        }
     }
 }
 
@@ -71,14 +78,18 @@ pub fn sample_svs<R: Rng>(rng: &mut R, alpha: f64, n: usize) -> Vec<(f64, f64)> 
     let mut b_upper = alpha;
 
     // Sample n-1 pairs
-    for _ in 0..(n-1) {
+    for _ in 0..(n - 1) {
         // Define sigma1
         let sigma1 = uniform(rng, f64::max(0.0, b_lower / 3.0), f64::min(1.0, b_upper));
         b_lower = b_lower - sigma1;
         b_upper = b_upper - sigma1;
 
         // Define sigma2
-        let sigma2 = uniform(rng, f64::max(0.0, 0.5 * b_lower), f64::min(sigma1, 0.5 * b_upper));
+        let sigma2 = uniform(
+            rng,
+            f64::max(0.0, 0.5 * b_lower),
+            f64::min(sigma1, 0.5 * b_upper),
+        );
         b_lower = b_lower - 2.0 * sigma2 + 3.0;
         b_upper = b_upper - 2.0 * sigma2;
 
@@ -86,11 +97,7 @@ pub fn sample_svs<R: Rng>(rng: &mut R, alpha: f64, n: usize) -> Vec<(f64, f64)> 
     }
 
     // Last pair
-    let sigma2 = uniform(
-        rng,
-        f64::max(0.0, 0.5 * (b_upper - 1.0)),
-        b_upper / 3.0,
-    );
+    let sigma2 = uniform(rng, f64::max(0.0, 0.5 * (b_upper - 1.0)), b_upper / 3.0);
     let sigma1 = b_upper - 2.0 * sigma2;
     result.push((sigma1, sigma2));
 
@@ -173,9 +180,7 @@ pub fn rand_sigma_factor_ifs<R: Rng>(rng: &mut R) -> SigmaFactorIFS {
     }
 
     // Create probability weights based on determinants
-    let mut weights: Vec<f64> = transforms.iter()
-        .map(|t| t.determinant().abs())
-        .collect();
+    let mut weights: Vec<f64> = transforms.iter().map(|t| t.determinant().abs()).collect();
 
     // Normalize weights
     let sum: f64 = weights.iter().sum();

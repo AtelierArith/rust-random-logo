@@ -96,11 +96,7 @@ fn normalize_points(xs: &mut Vec<f64>, ys: &mut Vec<f64>, height: usize, width: 
 /// # Returns
 ///
 /// An RGB image
-pub fn render<R: Rng + Clone>(
-    mut rng: R,
-    ifs: &SigmaFactorIFS,
-    config: &Config,
-) -> RgbImage {
+pub fn render<R: Rng + Clone>(mut rng: R, ifs: &SigmaFactorIFS, config: &Config) -> RgbImage {
     let height = config.height;
     let width = config.width;
     let npoints = config.npoints;
@@ -141,17 +137,28 @@ pub fn render_from_config(config: &Config) -> Result<RgbImage> {
 
     // Validate IFS configuration
     if config.ifs_name != "SigmaFactorIFS" {
-        return Err(Error::ConfigError(format!("Unknown IFS: {}", config.ifs_name)));
+        return Err(Error::ConfigError(format!(
+            "Unknown IFS: {}",
+            config.ifs_name
+        )));
     }
 
     if config.ndims != 2 {
-        return Err(Error::ConfigError(format!("Unsupported dimension: {}", config.ndims)));
+        return Err(Error::ConfigError(format!(
+            "Unsupported dimension: {}",
+            config.ndims
+        )));
     }
 
     // Create RNG
     let mut rng = match config.rng_name.as_str() {
         "Xoshiro256PlusPlus" => Xoshiro256PlusPlus::seed_from_u64(config.seed),
-        _ => return Err(Error::ConfigError(format!("Unknown RNG: {}", config.rng_name))),
+        _ => {
+            return Err(Error::ConfigError(format!(
+                "Unknown RNG: {}",
+                config.rng_name
+            )))
+        }
     };
 
     // Create IFS

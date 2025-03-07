@@ -3,12 +3,12 @@
 //! This example generates 25 different fractal images with different seeds
 //! and arranges them in a 5x5 grid, saving the result as a single large image.
 
-use std::path::PathBuf;
+use image::ImageBuffer;
 use rand::SeedableRng;
 use rand_xoshiro::Xoshiro256PlusPlus;
-use image::ImageBuffer;
+use std::path::PathBuf;
 
-use rust_random_logo::{Config, render, rand_sigma_factor_ifs};
+use rust_random_logo::{rand_sigma_factor_ifs, render, Config};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Configuration for each fractal
@@ -31,7 +31,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let grid_height = base_config.height * grid_rows;
     let mut grid_image = ImageBuffer::new(grid_width as u32, grid_height as u32);
 
-    println!("Generating {} fractals for a {}x{} grid...", grid_rows * grid_cols, grid_rows, grid_cols);
+    println!(
+        "Generating {} fractals for a {}x{} grid...",
+        grid_rows * grid_cols,
+        grid_rows,
+        grid_cols
+    );
 
     // Generate fractals and place them in the grid
     for row in 0..grid_rows {
@@ -51,7 +56,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let ifs = rand_sigma_factor_ifs(&mut rng);
 
             // Render the fractal
-            println!("  Rendering fractal {}/{} with seed {}...", index + 1, grid_rows * grid_cols, seed);
+            println!(
+                "  Rendering fractal {}/{} with seed {}...",
+                index + 1,
+                grid_rows * grid_cols,
+                seed
+            );
             let fractal = render(rng, &ifs, &config);
 
             // Calculate the position in the grid

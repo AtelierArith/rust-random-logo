@@ -4,7 +4,7 @@ use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use rand::SeedableRng;
 use rand_xoshiro::Xoshiro256PlusPlus;
 
-use rust_random_logo::{Config, render, rand_sigma_factor_ifs};
+use rust_random_logo::{rand_sigma_factor_ifs, render, Config};
 
 fn bench_generate_ifs(c: &mut Criterion) {
     c.bench_function("generate_ifs", |b| {

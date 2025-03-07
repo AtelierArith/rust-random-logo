@@ -4,7 +4,7 @@ use std::env;
 use std::path::PathBuf;
 use std::process;
 
-use rust_random_logo::{Config, render_from_config};
+use rust_random_logo::{render_from_config, Config};
 
 fn main() {
     // Parse command-line arguments

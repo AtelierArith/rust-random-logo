@@ -1,10 +1,10 @@
 //! Basic example of using the rust-random-logo library
 
-use std::path::PathBuf;
 use rand::SeedableRng;
 use rand_xoshiro::Xoshiro256PlusPlus;
+use std::path::PathBuf;
 
-use rust_random_logo::{Config, render, rand_sigma_factor_ifs};
+use rust_random_logo::{rand_sigma_factor_ifs, render, Config};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a random number generator with a seed

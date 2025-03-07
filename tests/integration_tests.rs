@@ -3,7 +3,7 @@
 use rand::SeedableRng;
 use rand_xoshiro::Xoshiro256PlusPlus;
 
-use rust_random_logo::{Config, render, render_from_config, rand_sigma_factor_ifs};
+use rust_random_logo::{rand_sigma_factor_ifs, render, render_from_config, Config};
 
 #[test]
 fn test_render_with_config() {

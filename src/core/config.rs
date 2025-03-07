@@ -3,9 +3,9 @@
 //! This module provides the Config struct and related functions for loading
 //! configuration from TOML files.
 
+use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
-use serde::{Deserialize, Serialize};
 use toml;
 
 use crate::error::Result;

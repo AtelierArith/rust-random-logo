@@ -32,7 +32,7 @@ pub mod error;
 
 // Re-export commonly used items
 pub use core::affine::Affine;
-pub use core::ifs::{SigmaFactorIFS, sample_svs, rand_sigma_factor_ifs};
 pub use core::config::Config;
+pub use core::ifs::{rand_sigma_factor_ifs, sample_svs, SigmaFactorIFS};
 pub use core::renderer::{generate_points, render, render_from_config};
 pub use error::{Error, Result};
