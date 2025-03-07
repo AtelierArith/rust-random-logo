@@ -1,0 +1,16 @@
+# Configuration for rust-random-logo
+
+# Image dimensions
+height = 384
+width = 384
+
+# Number of points to generate
+npoints = 100000
+
+# IFS configuration
+ifs_name = "SigmaFactorIFS"
+ndims = 2
+
+# Random number generator configuration
+rng_name = "Xoshiro256PlusPlus"
+seed = 42

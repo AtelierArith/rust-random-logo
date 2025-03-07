@@ -1,0 +1,26 @@
+[package]
+name = "rust-random-logo"
+version = "0.1.0"
+edition = "2021"
+authors = ["Rust Developer"]
+description = "A Rust implementation of the RandomLogos fractal generation library"
+license = "MIT"
+readme = "README.md"
+
+[dependencies]
+nalgebra = "0.32.3"       # Linear algebra
+rand = "0.8.5"            # Random number generation
+rand_distr = "0.4.3"      # Probability distributions
+rand_xoshiro = "0.6.0"    # Xoshiro PRNG
+image = "0.24.7"          # Image processing
+toml = "0.8.8"            # TOML parsing
+serde = { version = "1.0.193", features = ["derive"] }  # Serialization
+rayon = "1.8.0"           # Parallel computing
+thiserror = "1.0.50"      # Error handling
+
+[dev-dependencies]
+criterion = "0.5.1"       # Benchmarking
+
+[[bench]]
+name = "benchmarks"
+harness = false
