@@ -137,7 +137,7 @@ ndims = 2
 
 # Random number generator configuration
 rng_name = "Xoshiro256PlusPlus"
-seed = 42
+seed = 99
 ```
 
 ## Continuous Integration
