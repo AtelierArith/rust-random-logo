@@ -45,7 +45,7 @@ impl Config {
             ifs_name: "SigmaFactorIFS".to_string(),
             ndims: 2,
             rng_name: "Xoshiro256PlusPlus".to_string(),
-            seed: 42,
+            seed: 99,
         }
     }
 

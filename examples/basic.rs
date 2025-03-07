@@ -8,7 +8,7 @@ use rust_random_logo::{Config, render, rand_sigma_factor_ifs};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a random number generator with a seed
-    let mut rng = Xoshiro256PlusPlus::seed_from_u64(42);
+    let mut rng = Xoshiro256PlusPlus::seed_from_u64(99);
 
     // Create a random IFS
     let ifs = rand_sigma_factor_ifs(&mut rng);
@@ -21,7 +21,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ifs_name: "SigmaFactorIFS".to_string(),
         ndims: 2,
         rng_name: "Xoshiro256PlusPlus".to_string(),
-        seed: 42,
+        seed: 99,
     };
 
     // Render the image
