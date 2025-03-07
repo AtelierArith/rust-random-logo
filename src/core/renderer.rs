@@ -148,21 +148,15 @@ pub fn render_from_config(config: &Config) -> Result<RgbImage> {
         return Err(Error::ConfigError(format!("Unsupported dimension: {}", config.ndims)));
     }
 
-    // Create RNG for IFS generation
-    let mut rng_for_ifs = match config.rng_name.as_str() {
+    // Create RNG
+    let mut rng = match config.rng_name.as_str() {
         "Xoshiro256PlusPlus" => Xoshiro256PlusPlus::seed_from_u64(config.seed),
         _ => return Err(Error::ConfigError(format!("Unknown RNG: {}", config.rng_name))),
     };
 
     // Create IFS
-    let ifs = crate::core::ifs::rand_sigma_factor_ifs(&mut rng_for_ifs);
-
-    // Create a new RNG for rendering with the same seed
-    let rng_for_render = match config.rng_name.as_str() {
-        "Xoshiro256PlusPlus" => Xoshiro256PlusPlus::seed_from_u64(config.seed),
-        _ => return Err(Error::ConfigError(format!("Unknown RNG: {}", config.rng_name))),
-    };
+    let ifs = crate::core::ifs::rand_sigma_factor_ifs(&mut rng);
 
     // Render image
-    Ok(render(rng_for_render, &ifs, config))
+    Ok(render(rng, &ifs, config))
 }
