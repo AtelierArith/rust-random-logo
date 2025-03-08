@@ -247,4 +247,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 上記のファイルの効果は定かではないが，いくつかの修正を（手動ではなくClineを）通して無事 Julia から Rust へ移植することができた．
 CI を通すために `cargo clippy`, `cargo fmt` は手動でコマンドを実行した．
-なお，Appendix は人間が書いている．
+なお，Appendix はリポジトリのオーナ(@terasakisatoshi)が書いている．参考までに生成コストなどを共有する
+
+- リポジトリのオーナはCline を使って代理実装をさせる試みは初めてである．
+- API 使用によるクレジット消費量: ５ドル (Cline が出力する統計情報から）
+- `.clinerules` のセットアップからこのプロジェクトの公開までに１時間程度でできた．
