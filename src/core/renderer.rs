@@ -62,7 +62,7 @@ pub fn generate_points<R: Rng + Clone>(
 /// * `ys` - Y coordinates
 /// * `height` - Height of the output space
 /// * `width` - Width of the output space
-fn normalize_points(xs: &mut Vec<f64>, ys: &mut Vec<f64>, height: usize, width: usize) {
+fn normalize_points(xs: &mut [f64], ys: &mut [f64], height: usize, width: usize) {
     // Find min and max values
     let x_min = xs.iter().fold(f64::INFINITY, |a, &b| a.min(b));
     let x_max = xs.iter().fold(f64::NEG_INFINITY, |a, &b| a.max(b));
