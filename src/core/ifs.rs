@@ -81,8 +81,8 @@ pub fn sample_svs<R: Rng>(rng: &mut R, alpha: f64, n: usize) -> Vec<(f64, f64)> 
     for _ in 0..(n - 1) {
         // Define sigma1
         let sigma1 = uniform(rng, f64::max(0.0, b_lower / 3.0), f64::min(1.0, b_upper));
-        b_lower = b_lower - sigma1;
-        b_upper = b_upper - sigma1;
+        b_lower -= sigma1;
+        b_upper -= sigma1;
 
         // Define sigma2
         let sigma2 = uniform(
@@ -91,7 +91,7 @@ pub fn sample_svs<R: Rng>(rng: &mut R, alpha: f64, n: usize) -> Vec<(f64, f64)> 
             f64::min(sigma1, 0.5 * b_upper),
         );
         b_lower = b_lower - 2.0 * sigma2 + 3.0;
-        b_upper = b_upper - 2.0 * sigma2;
+        b_upper -= 2.0 * sigma2;
 
         result.push((sigma1, sigma2));
     }
